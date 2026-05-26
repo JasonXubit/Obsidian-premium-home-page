@@ -830,52 +830,64 @@ extends obsidian.Plugin {
 
 
         this.app.workspace
-            .onLayoutReady(
-                () => {
+        .onLayoutReady(
+        ()=>{
 
-                    if (
-                        this.settings.showOnStartup
-                    ) {
+        if(
+        this.settings
+        .showOnStartup
+        ){
 
-                        this.activateView();
+        setTimeout(
 
-                    }
+        async()=>{
 
-                }
-            );
+        await this.activateView();
+
+        },
+
+        100
+
+        );
+
+        }
+
+        }
+        );
 
     }
 
 
 
-    async activateView() {
+    async activateView(){
 
-        let leaf =
+    const leaf=
 
-            this.app.workspace
-                .getLeavesOfType(
-                    VIEW_TYPE
-                )[0];
+    this.app.workspace
+    .getMostRecentLeaf();
 
 
-        if (!leaf) {
+    await leaf
+    .setViewState({
 
-            leaf =
+    type:
+    VIEW_TYPE,
 
-                this.app.workspace
-                    .getLeaf(true);
+    active:true
 
-            await leaf
-                .setViewState({
+    });
 
-                    type:
-                        VIEW_TYPE,
 
-                    active: true
+    this.app.workspace
+    .setActiveLeaf(
 
-                });
+    leaf,
 
-        }
+    true,
+
+    true
+
+    );
 
     }
 
